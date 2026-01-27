@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>View Students</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      width: 420px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Student List</h2>
+    <ul id="list"></ul>
+  </div>
+
+  <script>
+    fetch("http://localhost:3001/students")
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("list");
+        data.forEach(s => {
+          const li = document.createElement("li");
+          li.innerText = `${s.name} - ${s.age} - ${s.className}`;
+          list.appendChild(li);
+        });
+      });
+  </script>
+
+</body>
+</html>

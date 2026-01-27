@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Student</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      width: 420px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .submit {
+      background: #ff7e5f;
+    }
+
+    .secondary {
+      background: #4facfe;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2>Add Student</h2>
+
+    <input id="name" placeholder="Student Name" />
+    <input id="age" type="number" placeholder="Age" />
+    <input id="className" placeholder="Class" />
+
+    <button class="submit" onclick="addStudent()">Submit</button>
+
+    <button class="secondary" onclick="location.href='index.html'">
+      ⬅ Back to Home
+    </button>
+
+    <button class="secondary" onclick="location.href='view.html'">
+      👀 View Students
+    </button>
+  </div>
+
+  <script>
+    const API = "http://localhost:3001/students";
+
+    function addStudent() {
+      const name = document.getElementById("name");
+      const age = document.getElementById("age");
+      const className = document.getElementById("className");
+
+      if (!name.value || !age.value || !className.value) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.value,
+          age: age.value,
+          className: className.value
+        })
+      })
+      .then(() => {
+        alert("Student Added Successfully");
+
+        // Clear fields
+        name.value = "";
+        age.value = "";
+        className.value = "";
+      })
+      .catch(err => {
+        alert("Error adding student");
+        console.error(err);
+      });
+    }
+  </script>
+
+</body>
+</html>
+
